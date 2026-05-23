@@ -1,0 +1,59 @@
+# AI Resume Analyzer
+
+Full-stack AI Resume Analyzer built with FastAPI, React (Vite), Tailwind CSS, Framer Motion, and MongoDB.
+
+## Project Structure
+
+```text
+AI-RESUME-ANALYZER/
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── config/
+│   │   │   └── db.py
+│   │   ├── database/
+│   │   │   └── mongo.py
+│   │   ├── routes/
+│   │   │   └── resume.py
+│   │   ├── services/
+│   │   │   ├── extract.py
+│   │   │   ├── preprocess.py
+│   │   │   └── similarity.py
+│   │   └── models/
+│   ├── requirements.txt
+│   ├── .env
+│   ├── .gitignore
+│   └── render.yaml
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   ├── vite.config.js
+│   └── .gitignore
+├── README.md
+└── .gitignore
+```
+
+## Local Development
+
+### Backend
+
+```bash
+cd backend
+.\venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+## Environment Variables
+
+Create `backend/.env` with:
+
+```env
+MONGO_URI=your_mongodb_atlas_connection_string
+```
