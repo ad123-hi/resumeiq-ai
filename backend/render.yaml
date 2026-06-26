@@ -3,8 +3,11 @@ services:
     name: resumeiq-backend
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && python -m nltk.downloader stopwords wordnet omw-1.4
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     envVars:
       - key: MONGO_URL
+        sync: false
+      - key: CORS_ORIGINS
         sync: false

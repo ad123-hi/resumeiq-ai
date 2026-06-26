@@ -55,5 +55,8 @@ npm run dev -- --host 127.0.0.1 --port 5173
 Create `backend/.env` with:
 
 ```env
-MONGO_URI=your_mongodb_atlas_connection_string
+MONGO_URL=your_mongodb_atlas_connection_string
+MONGO_DB_NAME=resumeiq
+MONGO_COLLECTION_NAME=results
+CORS_ORIGINS=http://localhost:5173
 ```
