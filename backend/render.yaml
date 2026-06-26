@@ -3,7 +3,7 @@ services:
     name: resumeiq-backend
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt && python -m nltk.downloader stopwords wordnet omw-1.4
+    buildCommand: pip install -r requirements.txt && python -m nltk.downloader -d ./nltk_data stopwords wordnet omw-1.4
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
@@ -11,3 +11,5 @@ services:
         sync: false
       - key: CORS_ORIGINS
         sync: false
+      - key: NLTK_DATA
+        value: /opt/render/project/src/backend/nltk_data
