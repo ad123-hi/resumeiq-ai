@@ -7,7 +7,8 @@ app = FastAPI()
 
 # Configure CORS to allow requests from your Vercel frontend and local environment
 origins = [
-    "https://resumeiq-ai-ochre.vercel.app",  # Your live Vercel frontend URL
+    "https://resumeiq-ai-ochre.vercel.app",
+    "http://localhost:3000"# Your live Vercel frontend URL
 
 ]
 
