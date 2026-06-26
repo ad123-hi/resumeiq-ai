@@ -1,34 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config.db import get_database_status
-from app.config.settings import get_settings
-from app.routes.resume import router as resume_router
+app = FastAPI()
 
-settings = get_settings()
-cors_origins = settings["cors_origins"] or ["*"]
-
-app = FastAPI(title="ResumeIQ API")
+# Configure CORS to allow requests from your Vercel frontend and local environment
+origins = [
+    "https://resumeiq-ai-ochre.vercel.app",  # Your live Vercel frontend URL
+    "http://localhost:3000",                 # Common port for local frontend development
+    "http://127.0.0.1:3000",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
-    allow_credentials=bool(settings["cors_origins"]),
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(resume_router, prefix="/resume", tags=["resume"])
-
-
 @app.get("/")
-async def root():
-    return {"status": "ok"}
-
-
-@app.get("/health")
-async def health_check():
-    return {
-        "status": "ok",
-        "database": get_database_status()["status"],
-    }
+def read_root():
+    return {"status": "healthy", "message": "Backend is running and connected successfully!"}
