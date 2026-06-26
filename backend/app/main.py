@@ -1,3 +1,5 @@
+import os
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,3 +23,8 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return {"status": "healthy", "message": "Backend is running and connected successfully!"}
+
+if __name__ == "__main__":
+    # Pull the port from Render's environment variables, defaulting to 10000 if local
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=True)
