@@ -19,10 +19,15 @@ def get_settings() -> dict[str, str | list[str]]:
     db_name = os.getenv("MONGO_DB_NAME", "resumeiq")
     collection_name = os.getenv("MONGO_COLLECTION_NAME", "results")
     cors_origins = _split_csv(os.getenv("CORS_ORIGINS"))
+    cors_origin_regex = os.getenv(
+        "CORS_ORIGIN_REGEX",
+        r"https://.*\.vercel\.app",
+    ).strip()
 
     return {
         "mongo_url": mongo_url,
         "db_name": db_name,
         "collection_name": collection_name,
         "cors_origins": cors_origins,
+        "cors_origin_regex": cors_origin_regex,
     }

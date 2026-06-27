@@ -50,6 +50,18 @@ cd frontend
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
+Create `frontend/.env` with:
+
+```env
+VITE_API_URL=https://resumeiq-backend.onrender.com
+```
+
+For production builds, `frontend/.env.production` can use the same value:
+
+```env
+VITE_API_URL=https://resumeiq-backend.onrender.com
+```
+
 ## Environment Variables
 
 Create `backend/.env` with:
@@ -58,5 +70,6 @@ Create `backend/.env` with:
 MONGO_URL=your_mongodb_atlas_connection_string
 MONGO_DB_NAME=resumeiq
 MONGO_COLLECTION_NAME=results
-CORS_ORIGINS=http://localhost:5173
+CORS_ORIGINS=http://localhost:5173,https://your-frontend-domain.com
+CORS_ORIGIN_REGEX=https://.*\.vercel\.app
 ```

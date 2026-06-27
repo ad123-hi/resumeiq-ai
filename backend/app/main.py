@@ -1,31 +1,36 @@
-import os
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+from app.config.db import get_database_status
+from app.config.settings import get_settings
+from app.routes.resume import router as resume_router
 
-# Configure CORS to allow requests from your Vercel frontend and local environment
-origins = [
-    "https://resumeiq-ai-ochre.vercel.app",
-    "https://resumeiq-gk80oqwl4-adityas-projects-86eb457e.vercel.app",
-    "http://localhost:5173",  # Vite default
-    "http://localhost:3000",  # Common alternative
-]
+settings = get_settings()
+cors_origins = settings["cors_origins"] or ["*"]
+cors_origin_regex = settings["cors_origin_regex"] or None
+
+app = FastAPI(title="ResumeIQ API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=cors_origins,
+    allow_origin_regex=cors_origin_regex,
+    allow_credentials=bool(settings["cors_origins"]),
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"status": "healthy", "message": "Backend is running and connected successfully!"}
+app.include_router(resume_router, prefix="/resume", tags=["resume"])
 
-if __name__ == "__main__":
-    # Pull the port from Render's environment variables, defaulting to 10000 if local
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=True)
+
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
+
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "database": get_database_status()["status"],
+    }
