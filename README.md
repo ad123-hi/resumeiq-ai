@@ -53,14 +53,22 @@ npm run dev -- --host 127.0.0.1 --port 5173
 Create `frontend/.env` with:
 
 ```env
-VITE_API_URL=https://resumeiq-backend.onrender.com
+VITE_API_URL=https://your-fastapi-backend.onrender.com
 ```
 
-For production builds, `frontend/.env.production` can use the same value:
+Before deploying the frontend, verify that:
 
-```env
-VITE_API_URL=https://resumeiq-backend.onrender.com
+```text
+GET <VITE_API_URL>/health
 ```
+
+returns the ResumeIQ API health response, and that:
+
+```text
+POST <VITE_API_URL>/resume/analyze
+```
+
+is a valid endpoint on the same service.
 
 ## Environment Variables
 
